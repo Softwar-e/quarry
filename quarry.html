@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGINVEST — Gurore, Pezë, Shqipëri</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --stone-50:#EEEAE1;
+    --stone-200:#D8D0C1;
+    --slate-500:#5B6169;
+    --charcoal-800:#26282B;
+    --charcoal-900:#1B1C1E;
+    --ochre-500:#B5652D;
+    --ochre-600:#8F4E22;
+    --moss-500:#5C6B4F;
+    --moss-700:#3E4A36;
+    --white:#FBF9F5;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--stone-50);
+    color:var(--charcoal-900);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(238,234,225,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(27,28,30,0.08);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;max-width:1180px;margin:0 auto;
+  }
+  .brand{
+    font-family:var(--font-display);
+    font-weight:700;font-size:1.15rem;letter-spacing:0.01em;
+    display:flex;align-items:center;gap:10px;
+  }
+  .brand-mark{width:20px;height:20px;flex-shrink:0;}
+  .nav-links{display:flex;gap:36px;font-size:0.92rem;font-weight:500;}
+  .nav-links a{position:relative;padding:4px 0;}
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1.5px;
+    background:var(--ochre-500);transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--charcoal-900);color:var(--white);
+    padding:10px 20px;border-radius:2px;font-size:0.88rem;font-weight:500;
+    transition:background .2s ease;
+  }
+  .nav-cta:hover{background:var(--ochre-600);}
+  .menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-btn span{display:block;width:22px;height:2px;background:var(--charcoal-900);margin:5px 0;}
+
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding-top:80px;
+    background:linear-gradient(180deg,#DCE4E6 0%, var(--stone-200) 55%, var(--stone-50) 100%);
+    overflow:hidden;
+  }
+  .strata-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+  .hero-inner{position:relative;z-index:2;padding:0 32px 72px;max-width:1180px;margin:0 auto;width:100%;}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ochre-600);margin-bottom:20px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--ochre-600);}
+  h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2.6rem, 6.2vw, 5.4rem);
+    line-height:0.98;
+    max-width:15ch;
+    color:var(--charcoal-900);
+  }
+  h1 em{font-style:italic;font-weight:400;color:var(--ochre-600);}
+  .hero-sub{
+    margin-top:26px;font-size:1.08rem;max-width:44ch;color:var(--slate-500);
+  }
+  .hero-stats{
+    display:flex;gap:48px;margin-top:52px;flex-wrap:wrap;
+    border-top:1px solid rgba(27,28,30,0.15);padding-top:24px;
+  }
+  .stat-num{font-family:var(--font-mono);font-size:1.6rem;color:var(--charcoal-900);}
+  .stat-label{font-family:var(--font-mono);font-size:0.72rem;color:var(--slate-500);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;}
+
+  section{padding:120px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-eyebrow{
+    font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--ochre-600);margin-bottom:16px;
+  }
+  h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(1.9rem, 3.4vw, 2.8rem);line-height:1.08;
+  }
+  .lede{margin-top:18px;font-size:1.05rem;color:var(--slate-500);max-width:52ch;}
+
+  .about{background:var(--charcoal-900);color:var(--white);}
+  .about .section-eyebrow{color:var(--ochre-500);}
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  }
+  .about-text p{color:rgba(251,249,245,0.75);margin-top:18px;max-width:48ch;}
+  .core-sample{position:relative;}
+  .core-sample svg{width:100%;height:auto;}
+  .core-label{
+    font-family:var(--font-mono);font-size:0.7rem;color:rgba(251,249,245,0.55);
+    letter-spacing:0.05em;margin-top:14px;
+  }
+
+  .products-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:rgba(27,28,30,0.12);border:1px solid rgba(27,28,30,0.12);
+  }
+  .product-card{
+    background:var(--stone-50);padding:40px 32px;position:relative;
+    transition:background .25s ease;
+  }
+  .product-card:hover{background:var(--white);}
+  .product-icon{width:38px;height:38px;margin-bottom:24px;color:var(--ochre-500);}
+  .product-card h3{font-family:var(--font-display);font-weight:600;font-size:1.3rem;margin-bottom:10px;}
+  .product-card p{color:var(--slate-500);font-size:0.94rem;margin-bottom:20px;}
+  .spec-row{
+    display:flex;justify-content:space-between;font-family:var(--font-mono);
+    font-size:0.76rem;padding:7px 0;border-top:1px solid rgba(27,28,30,0.08);color:var(--slate-500);
+  }
+  .spec-row span:last-child{color:var(--charcoal-900);}
+
+  .process{background:var(--stone-200);}
+  .process-list{display:flex;flex-direction:column;}
+  .process-item{
+    display:grid;grid-template-columns:90px 1fr;gap:32px;
+    padding:34px 0;border-top:1px solid rgba(27,28,30,0.14);
+  }
+  .process-item:last-child{border-bottom:1px solid rgba(27,28,30,0.14);}
+  .process-num{font-family:var(--font-mono);font-size:0.95rem;color:var(--ochre-600);padding-top:4px;}
+  .process-item h3{font-family:var(--font-display);font-weight:600;font-size:1.35rem;margin-bottom:8px;}
+  .process-item p{color:var(--slate-500);max-width:56ch;}
+
+  .sustain-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:start;}
+  .sustain-list{list-style:none;margin-top:8px;}
+  .sustain-list li{
+    display:flex;gap:16px;padding:20px 0;border-top:1px solid rgba(27,28,30,0.1);
+  }
+  .sustain-list li:last-child{border-bottom:1px solid rgba(27,28,30,0.1);}
+  .sustain-mark{width:18px;height:18px;flex-shrink:0;margin-top:3px;color:var(--moss-700);}
+  .sustain-list h4{font-family:var(--font-body);font-weight:600;font-size:1rem;}
+  .sustain-list p{color:var(--slate-500);font-size:0.92rem;margin-top:4px;}
+  .mountain-strip{width:100%;height:auto;border-radius:2px;overflow:hidden;}
+
+  .location{background:var(--charcoal-900);color:var(--white);}
+  .location .section-eyebrow{color:var(--ochre-500);}
+  .location-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+  .map-svg{width:100%;height:auto;}
+  .loc-detail{display:flex;justify-content:space-between;padding:16px 0;border-top:1px solid rgba(251,249,245,0.14);font-size:0.92rem;}
+  .loc-detail:last-child{border-bottom:1px solid rgba(251,249,245,0.14);}
+  .loc-detail span:first-child{color:rgba(251,249,245,0.55);font-family:var(--font-mono);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.05em;}
+
+  .cta{
+    background:var(--ochre-500);
+    color:var(--white);
+    text-align:center;
+    padding:110px 0;
+  }
+  .cta h2{color:var(--white);max-width:20ch;margin:0 auto;}
+  .cta p{margin-top:16px;color:rgba(251,249,245,0.85);}
+  .cta-buttons{display:flex;gap:18px;justify-content:center;margin-top:40px;flex-wrap:wrap;}
+  .btn{
+    padding:14px 30px;border-radius:2px;font-weight:500;font-size:0.94rem;
+    transition:transform .2s ease, background .2s ease;
+    display:inline-block;
+  }
+  .btn-dark{background:var(--charcoal-900);color:var(--white);}
+  .btn-dark:hover{transform:translateY(-2px);}
+  .btn-outline{border:1px solid rgba(251,249,245,0.6);color:var(--white);}
+  .btn-outline:hover{background:rgba(251,249,245,0.12);transform:translateY(-2px);}
+
+  footer{
+    background:var(--charcoal-900);color:rgba(251,249,245,0.6);
+    padding:48px 0 32px;font-size:0.85rem;
+  }
+  .footer-grid{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+  .footer-links{display:flex;gap:28px;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .menu-btn{display:block;}
+    .about-grid,.sustain-grid,.location-grid{grid-template-columns:1fr;gap:48px;}
+    .products-grid{grid-template-columns:1fr;}
+    .hero-stats{gap:32px;}
+    section{padding:80px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none"><path d="M2 20L8 6L12 14L16 4L22 20H2Z" fill="#B5652D"/></svg>
+      AGINVEST
+    </div>
+    <div class="nav-links">
+      <a href="#rreth">Rreth Nesh</a>
+      <a href="#produkte">Produktet</a>
+      <a href="#procesi">Procesi</a>
+      <a href="#qendrueshmeria">Qëndrueshmëria</a>
+      <a href="#vendndodhja">Vendndodhja</a>
+    </div>
+    <a href="#kontakt" class="nav-cta">Kërko ofertë</a>
+    <button class="menu-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<section class="hero">
+  <svg class="strata-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1440" height="900" fill="#DCE4E6"/>
+    <path d="M0 560 L120 520 L260 545 L400 500 L560 530 L720 490 L900 520 L1080 480 L1260 510 L1440 470 L1440 900 L0 900 Z" fill="#C9CFC7"/>
+    <path d="M0 620 L150 600 L320 630 L480 590 L650 615 L820 580 L1000 610 L1180 575 L1440 605 L1440 900 L0 900 Z" fill="#D8D0C1"/>
+    <path d="M0 690 L180 675 L360 700 L540 665 L720 690 L900 660 L1080 685 L1260 655 L1440 680 L1440 900 L0 900 Z" fill="#C7BBA4"/>
+    <path d="M0 760 L200 750 L400 770 L600 745 L800 765 L1000 740 L1200 760 L1440 740 L1440 900 L0 900 Z" fill="#AC9E82"/>
+    <path d="M0 830 L1440 830 L1440 900 L0 900 Z" fill="#8F7E5E"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow">Pezë · Rrethi i Tiranës · Shqipëri</div>
+    <h1>Çakull mali dhe mermer, nxjerrë nga guroret e <em>Pezës</em>.</h1>
+    <p class="hero-sub">AGINVEST nxjerr dhe përpunon çakull mali dhe mermer natyral në guroren tonë në Pezë — furnizojmë ndërtimin, infrastrukturën dhe punimet dekorative në të gjithë Shqipërinë.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">18 vjet</div>
+        <div class="stat-label">Në veprimtari të vazhdueshme</div>
+      </div>
+      <div>
+        <div class="stat-num">280.000 t</div>
+        <div class="stat-label">Nxjerrje vjetore</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Vendburime aktive — çakull &amp; mermer</div>
+      </div>
+      <div>
+        <div class="stat-num">ISO 9001</div>
+        <div class="stat-label">Kontroll cilësie i çertifikuar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="rreth">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-eyebrow">Vendburimi</div>
+        <h2>Dy shkëmbinj, një luginë — çakull dhe mermer nga Pezë.</h2>
+        <p>Guroret e AGINVEST ndodhen në zonën e Pezës, rreth 20 km në jugperëndim të Tiranës, ku dy formacione të ndryshme shkëmbore dalin pranë njëra-tjetrës: një masiv gëlqeror-dolomitik i përshtatshëm për çakull mali të fortë, dhe një depozitë mermeri me venat karakteristike gri-bardhë të zonës.</p>
+        <p>Nxjerrja bëhet në dy fronte të veçanta brenda të njëjtit kompleks: fronti i çakullit, ku shkëmbi thyhet dhe thërrmohet për inert ndërtimi, dhe fronti i mermerit, ku blloqet nxirren të plota për t'u prerë dhe lëmuar. Çdo grumbull, qoftë çakull apo bllok mermeri, testohet në laboratorin tonë përpara se të dërgohet.</p>
+      </div>
+      <div class="core-sample reveal">
+        <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="coreClip"><rect x="90" y="10" width="90" height="460" rx="45"/></clipPath>
+          </defs>
+          <g clip-path="url(#coreClip)">
+            <rect x="90" y="10" width="90" height="70" fill="#D8D0C1"/>
+            <rect x="90" y="80" width="90" height="55" fill="#C7BBA4"/>
+            <rect x="90" y="135" width="90" height="80" fill="#B7A98A"/>
+            <rect x="90" y="215" width="90" height="45" fill="#AC9E82"/>
+            <rect x="90" y="260" width="90" height="90" fill="#93855F"/>
+            <rect x="90" y="350" width="90" height="70" fill="#7C6E4C"/>
+            <rect x="90" y="420" width="90" height="50" fill="#655A3C"/>
+            <line x1="90" y1="80" x2="180" y2="80" stroke="#26282B" stroke-width="0.6" opacity="0.4"/>
+            <line x1="90" y1="135" x2="180" y2="135" stroke="#26282B" stroke-width="0.6" opacity="0.4"/>
+            <line x1="90" y1="215" x2="180" y2="215" stroke="#26282B" stroke-width="0.6" opacity="0.4"/>
+            <line x1="90" y1="260" x2="180" y2="260" stroke="#26282B" stroke-width="0.6" opacity="0.4"/>
+            <line x1="90" y1="350" x2="180" y2="350" stroke="#26282B" stroke-width="0.6" opacity="0.4"/>
+            <line x1="90" y1="420" x2="180" y2="420" stroke="#26282B" stroke-width="0.6" opacity="0.4"/>
+          </g>
+          <rect x="90" y="10" width="90" height="460" rx="45" fill="none" stroke="rgba(251,249,245,0.35)" stroke-width="1.2"/>
+          <text x="196" y="45" fill="rgba(251,249,245,0.85)" font-family="IBM Plex Mono" font-size="11">0 m</text>
+          <text x="196" y="140" fill="rgba(251,249,245,0.55)" font-family="IBM Plex Mono" font-size="11">shkallë 1–2</text>
+          <text x="196" y="225" fill="rgba(251,249,245,0.55)" font-family="IBM Plex Mono" font-size="11">shkallë 3</text>
+          <text x="196" y="310" fill="rgba(251,249,245,0.55)" font-family="IBM Plex Mono" font-size="11">shkallë 4</text>
+          <text x="196" y="390" fill="rgba(251,249,245,0.55)" font-family="IBM Plex Mono" font-size="11">shkallë 5</text>
+          <text x="196" y="460" fill="rgba(251,249,245,0.85)" font-family="IBM Plex Mono" font-size="11">−140 m</text>
+        </svg>
+        <div class="core-label">Regjistër bërthame, fronti i mermerit — matur Mars 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="produkte">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Çfarë prodhojmë</div>
+      <h2>Dy linja produktesh: çakull mali dhe mermer.</h2>
+      <p class="lede">Çakulli thërrmohet dhe ndahet sipas granulometrisë; mermeri nxirret në bllok e më pas pritet dhe lëmohet — të dyja testohen në laboratorin tonë përpara dërgesës.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal">
+        <svg class="product-icon" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.4" fill="currentColor"/><circle cx="15" cy="5" r="1.6" fill="currentColor"/><circle cx="18" cy="12" r="2" fill="currentColor"/><circle cx="9" cy="14" r="2.8" fill="currentColor"/><circle cx="16" cy="19" r="1.8" fill="currentColor"/><circle cx="4" cy="17" r="1.6" fill="currentColor"/></svg>
+        <h3>Çakull mali 0–31.5mm</h3>
+        <p>I ndarë sipas granulometrisë për beton, bazamente rrugësh dhe punime themeli.</p>
+        <div class="spec-row"><span>Dendësia</span><span>2.65 t/m³</span></div>
+        <div class="spec-row"><span>Koeficienti Los Angeles</span><span>≤ 24</span></div>
+        <div class="spec-row"><span>Standardi</span><span>EN 12620</span></div>
+      </div>
+      <div class="product-card reveal">
+        <svg class="product-icon" viewBox="0 0 24 24" fill="none"><path d="M3 20L9 4L13 15L17 6L21 20H3Z" fill="currentColor"/></svg>
+        <h3>Gur i thyer &amp; zhavorr</h3>
+        <p>Fraksione më të mëdha (40–90mm) për shtresa rrugësh, drenazhime dhe mbushje themelesh.</p>
+        <div class="spec-row"><span>Klasa</span><span>0/90 GC</span></div>
+        <div class="spec-row"><span>Dendësia në masë</span><span>1.60 t/m³</span></div>
+        <div class="spec-row"><span>Standardi</span><span>EN 13242</span></div>
+      </div>
+      <div class="product-card reveal">
+        <svg class="product-icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="7" height="7" fill="currentColor"/><rect x="14" y="4" width="7" height="7" fill="currentColor"/><rect x="8" y="15" width="7" height="7" fill="currentColor"/></svg>
+        <h3>Mermer në bllok</h3>
+        <p>Blloqe mermeri të papërpunuara nga fronti i Pezës, gri e bardhë me damarë natyralë, gati për prerje.</p>
+        <div class="spec-row"><span>Rezistenca në ngjeshje</span><span>110 MPa</span></div>
+        <div class="spec-row"><span>Përthithja e ujit</span><span>0.3%</span></div>
+        <div class="spec-row"><span>Standardi</span><span>EN 1926</span></div>
+      </div>
+      <div class="product-card reveal">
+        <svg class="product-icon" viewBox="0 0 24 24" fill="none"><path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="1.2"/></svg>
+        <h3>Mermer i lëmuar</h3>
+        <p>Pllaka dhe fasheta të prera dhe lustruara, për dysheme, shkallë dhe veshje fasadash.</p>
+        <div class="spec-row"><span>Trashësia</span><span>1–3 cm</span></div>
+        <div class="spec-row"><span>Shkëlqimi</span><span>Lustër e lartë</span></div>
+        <div class="spec-row"><span>Standardi</span><span>EN 1341</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="procesi">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Si lëviz materiali nëpër gurore</div>
+      <h2>Nga fronti i Pezës te kamioni i ngarkuar.</h2>
+    </div>
+    <div class="process-list">
+      <div class="process-item reveal">
+        <div class="process-num">01</div>
+        <div><h3>Shpim dhe matje</h3><p>Çdo shkallë matet dhe shpohet sipas një rrjeti fiks; një gjeolog e regjistron shkëmbin para se të planifikohet çdo shpërthim.</p></div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">02</div>
+        <div><h3>Shpërthim i kontrolluar</h3><p>Ngarkesat me kohë të caktuar e thyejnë frontin në copa të përballueshme, duke kufizuar dridhjet drejt fshatrave përreth, të monitoruara në çdo shpërthim.</p></div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">03</div>
+        <div><h3>Thërrmim ose prerje</h3><p>Në frontin e çakullit, shkëmbi kalon në thërrmues nofullor; në frontin e mermerit, blloqet nxirren të plota me prerje me tel diamanti, pa dëmtuar strukturën e gurit.</p></div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">04</div>
+        <div><h3>Klasifikim ose lëmim</h3><p>Çakulli ndahet sipas granulometrisë me sita vibruese; blloqet e mermerit çohen në fabrikën tonë të prerjes për t'u kthyer në pllaka të lëmuara.</p></div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">05</div>
+        <div><h3>Testim laboratorik</h3><p>Çdo grumbull testohet sipas standardeve EN përpara se të lëshohet për në depo.</p></div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">06</div>
+        <div><h3>Ngarkim dhe dërgim</h3><p>Kamionët peshohen dhe ngarkohen nga depot e mbuluara, me dërgesat e gjurmuara sipas porosive të ditës.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="qendrueshmeria">
+  <div class="wrap">
+    <div class="sustain-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">Duke ia kthyer tokës</div>
+        <h2>Nxjerrja e gurit është e përkohshme; kodra nuk është.</h2>
+        <p class="lede">Jemi të detyruar të rehabilitojmë çdo shkallë që mbyllim — por e trajtojmë si pjesë të planit që në fillim, jo si diçka të mëvonshme.</p>
+        <ul class="sustain-list">
+          <li>
+            <svg class="sustain-mark" viewBox="0 0 24 24" fill="none"><path d="M4 13l4 4L20 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><h4>Rehabilitim progresiv</h4><p>Shkallët e shfrytëzuara mbulohen me dhé dhe mbillen me bimësi vendase brenda 18 muajve nga mbyllja, jo më vonë.</p></div>
+          </li>
+          <li>
+            <svg class="sustain-mark" viewBox="0 0 24 24" fill="none"><path d="M4 13l4 4L20 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><h4>Riciklimi i ujit</h4><p>Uji i larjes nga sitat depozitohet dhe qarkullon në një sistem të mbyllur, duke ulur konsumin e ujit të pastër me rreth 70%.</p></div>
+          </li>
+          <li>
+            <svg class="sustain-mark" viewBox="0 0 24 24" fill="none"><path d="M4 13l4 4L20 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><h4>Monitorim pluhuri dhe zhurme</h4><p>Sensorë fiksë pranë dy fshatrave më të afërt raportojnë çdo ditë; orari i shpërthimeve përshtatet sipas drejtimit të erës.</p></div>
+          </li>
+          <li>
+            <svg class="sustain-mark" viewBox="0 0 24 24" fill="none"><path d="M4 13l4 4L20 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><h4>Punësim lokal</h4><p>Shumica e punonjësve vijnë nga Pezë dhe fshatrat përreth, me trajnim në vendngjarje për operatorët e rinj.</p></div>
+          </li>
+        </ul>
+      </div>
+      <svg class="mountain-strip reveal" viewBox="0 0 500 560" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="560" fill="#E9E4D8"/>
+        <path d="M0 320 L60 260 L120 300 L190 220 L250 280 L320 210 L390 270 L460 230 L500 260 L500 560 L0 560 Z" fill="#5C6B4F" opacity="0.9"/>
+        <path d="M0 380 L80 340 L160 370 L240 330 L320 365 L400 325 L500 355 L500 560 L0 560 Z" fill="#3E4A36"/>
+        <g opacity="0.85">
+          <circle cx="90" cy="420" r="5" fill="#7C8A63"/>
+          <circle cx="150" cy="440" r="4" fill="#7C8A63"/>
+          <circle cx="220" cy="410" r="6" fill="#7C8A63"/>
+          <circle cx="300" cy="450" r="4" fill="#7C8A63"/>
+          <circle cx="370" cy="420" r="5" fill="#7C8A63"/>
+          <circle cx="430" cy="445" r="4" fill="#7C8A63"/>
+        </g>
+        <text x="24" y="40" fill="#3E4A36" font-family="IBM Plex Mono" font-size="12" letter-spacing="1">SHKALLA 2 E REHABILITUAR — MBYLLUR 2019</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="vendndodhja">
+  <div class="wrap">
+    <div class="location-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">Na gjeni</div>
+        <h2>20 km nga Tirana, në zonën e Pezës.</h2>
+        <div class="loc-detail"><span>Adresa</span><span> Pezë e Vogël, Tiranë, Shqipëri</span></div>
+        <div class="loc-detail"><span>Koordinatat</span><span>41.2764° N, 19.6842° E</span></div>
+        <div class="loc-detail"><span>Orari i portës</span><span>Hën–Sht, 07:00–17:00</span></div>
+        <div class="loc-detail"><span>Aksesi</span><span>Rruga Tiranë–Pezë, 4 km nga qendra e Pezës</span></div>
+        <div class="loc-detail"><span>Porti më i afërt</span><span>Durrës, 38 km</span></div>
+      </div>
+      <svg class="map-svg reveal" viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="480" height="400" fill="#232527"/>
+        <path d="M0 120 Q120 90 240 130 T480 110" stroke="rgba(251,249,245,0.25)" stroke-width="2" fill="none"/>
+        <path d="M60 400 Q100 260 180 220 Q240 190 300 160 Q360 130 420 60" stroke="#B5652D" stroke-width="2.5" fill="none" stroke-dasharray="1 8" stroke-linecap="round"/>
+        <circle cx="60" cy="360" r="5" fill="#FBF9F5"/>
+        <text x="72" y="365" fill="rgba(251,249,245,0.7)" font-family="IBM Plex Mono" font-size="11">TIRANË</text>
+        <circle cx="300" cy="160" r="6" fill="#B5652D"/>
+        <text x="314" y="164" fill="#FBF9F5" font-family="IBM Plex Mono" font-size="12">AGINVEST — PEZË</text>
+        <circle cx="420" cy="60" r="4" fill="rgba(251,249,245,0.5)"/>
+        <text x="380" y="45" fill="rgba(251,249,245,0.55)" font-family="IBM Plex Mono" font-size="11">DURRËS →</text>
+        <g stroke="rgba(251,249,245,0.15)" stroke-width="1">
+          <path d="M0 40 h480 M0 200 h480 M0 340 h480"/>
+          <path d="M100 0 v400 M260 0 v400 M400 0 v400"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="kontakt">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Keni nevojë për një dërgesë apo inspektim shkalle?</h2>
+      <p>Zyra jonë e shitjeve përgjigjet brenda një dite pune. Porositë me shumicë zakonisht ngarkohen brenda 48 orësh.</p>
+      <div class="cta-buttons">
+        <a href="mailto:info@aginvest.al" class="btn btn-dark">info@aginvest.al</a>
+        <a href="tel:+35542309981" class="btn btn-outline">+355 69 721 2271</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>© 2026 AGINVEST Shpk. Pezë, Rrethi i Tiranës, Shqipëri.</div>
+    <div class="footer-links">
+      <a href="#rreth">Rreth Nesh</a>
+      <a href="#produkte">Produktet</a>
+      <a href="#vendndodhja">Vendndodhja</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  const menuBtn = document.querySelector('.menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+  menuBtn.addEventListener('click',()=>{
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? 'none' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position='absolute';
+    navLinks.style.top='64px';
+    navLinks.style.right='32px';
+    navLinks.style.background='var(--stone-50)';
+    navLinks.style.padding='20px 24px';
+    navLinks.style.border='1px solid rgba(27,28,30,0.1)';
+    navLinks.style.gap='16px';
+  });
+</script>
+
+</body>
+</html>
